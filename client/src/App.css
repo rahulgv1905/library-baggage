@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+/* client/src/App.css */
+
+/* This styles the container holding the buttons */
+.button-container {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center;    /* Aligns items vertically */
+  gap: 20px;              /* Creates a 20px space between the buttons */
+  margin-top: 20px;       /* Adds some space above the buttons */
+}
+
+/* This styles the navigation buttons */
+.nav-button {
+  /* Sizing and Spacing */
+  padding: 12px 24px;
+  font-size: 1.1em;
+  font-weight: bold;
+  min-width: 180px; /* Ensures both buttons have the same width */
+  
+  /* Appearance */
+  color: white;
+  background-color: #007bff; /* A nice blue color */
+  border: none;             /* Removes the default button border */
+  border-radius: 8px;       /* Gives the buttons rounded corners */
+  text-align: center;
+  text-decoration: none;
+  
+  /* Interactivity */
+  cursor: pointer; /* Changes the mouse cursor to a pointer on hover */
+  transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transition for hover effects */
+}
+
+/* This styles the buttons when the user hovers over them */
+.nav-button:hover {
+  background-color: #0056b3; /* A darker blue for the hover state */
+}
+
+/* A subtle effect for when the button is clicked */
+.nav-button:active {
+  transform: scale(0.98); /* Makes the button slightly smaller on click */
+}
