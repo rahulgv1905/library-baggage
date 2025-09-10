@@ -1,0 +1,117 @@
+// src/pages/AdminLoginPage.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
+
+// --- MUI Imports ---
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+  Alert,
+} from '@mui/material';
+
+const AdminLoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const userData = await authService.login(email, password);
+      if (userData.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        authService.logout();
+        setError('Access Denied: You do not have admin privileges.');
+      }
+    } catch (err) {
+      if (typeof err === 'string') {
+        setError(err);
+      } else {
+        setError('An unexpected network error occurred. Please try again.');
+        console.error(err);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    // Container centers the content horizontally
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          border: '1px solid #ddd',
+          padding: '2rem',
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Security Admin Login
+        </Typography>
+        
+        {/* Box is used for the form element for layout control */}
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {/* Display a proper Alert component for errors */}
+          {error && (
+            <Alert severity="error" sx={{ mt: 2, width: '100%' }}>
+              {error}
+            </Alert>
+          )}
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained" // This gives the button the solid, modern look
+            sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
+          </Button>
+        </Box>
+      </Box>
+    </Container>
+  );
+};
+
+export default AdminLoginPage;
