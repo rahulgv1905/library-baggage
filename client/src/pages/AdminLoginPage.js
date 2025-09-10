@@ -1,4 +1,4 @@
-// src/pages/AdminLoginPage.js
+// client/src/pages/AdminLoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
@@ -35,12 +35,11 @@ const AdminLoginPage = () => {
         setError('Access Denied: You do not have admin privileges.');
       }
     } catch (err) {
-      if (typeof err === 'string') {
-        setError(err);
-      } else {
-        setError('An unexpected network error occurred. Please try again.');
-        console.error(err);
-      }
+      // --- THE FIX IS HERE ---
+      // This ensures we always set a string to the error state, preventing the crash.
+      const errorMessage = typeof err === 'string' ? err : 'An unexpected error occurred. Please try again.';
+      setError(errorMessage);
+      console.error(err); // We still log the original error for debugging.
     } finally {
       setLoading(false);
     }
