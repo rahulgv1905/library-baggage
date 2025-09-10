@@ -1,20 +1,22 @@
-# Dependencies
-/node_modules
-/client/node_modules
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
 
-# Production build folders
-/client/build
-
-# Environment variables - THIS IS THE MOST IMPORTANT PART
+# Environment files
 .env
 server/.env
 client/.env
 
-# Log files
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS-specific files
+# OS files
 .DS_Store
 Thumbs.db
+
+# Build files
+dist/
+build/
