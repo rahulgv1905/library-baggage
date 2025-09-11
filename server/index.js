@@ -17,20 +17,14 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// --- CORS CONFIGURATION FOR PRODUCTION ---
-// This is the most important part for connecting Netlify to Render.
-// It tells the server to only accept requests from your live frontend URL.
+// --- CORRECTED CORS CONFIGURATION ---
 const corsOptions = {
   origin: 'https://librarybaggage.netlify.app',
-  optionsSuccessStatus: 200 // For legacy browser support
+  optionsSuccessStatus: 200
 };
 
-// We must use the corsOptions in the middleware.
+// This single 'app.use' line correctly handles ALL requests, including security pre-flights.
 app.use(cors(corsOptions));
-
-// This line is also important. It handles "pre-flight" requests that browsers
-// send to check if the server is safe to talk to.
-app.options('*', cors(corsOptions));
 
 // Standard Middleware
 app.use(express.json());
