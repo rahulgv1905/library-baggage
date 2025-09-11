@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Create an Axios instance with a base URL
 const api = axios.create({
-  baseURL: 'https://library-baggage.onrender.com',
+  baseURL: 'https://library-baggage.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
